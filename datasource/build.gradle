@@ -14,6 +14,10 @@ android {
         versionName rootProject.versionNameVersion
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        def properties = new Properties()
+        properties.load(project.rootProject.file('local.properties').newDataInputStream())
+        resValue "string", "flickr_api_key", properties.getProperty("FLICKR_API_KEY", "")
     }
 
     compileOptions {

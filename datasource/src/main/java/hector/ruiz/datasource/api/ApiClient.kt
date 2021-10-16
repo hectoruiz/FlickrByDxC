@@ -1,13 +1,15 @@
 package hector.ruiz.datasource.api
 
 import hector.ruiz.datasource.BuildConfig
+import hector.ruiz.datasource.interceptors.FlickrInterceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 
-class ApiClient() {
+class ApiClient @Inject constructor(flickrInterceptor: FlickrInterceptor) {
 
     private val loggingInterceptor = HttpLoggingInterceptor().apply {
         setLevel(
@@ -20,6 +22,7 @@ class ApiClient() {
     }
 
     val okHttpClient = OkHttpClient().newBuilder()
+        .addNetworkInterceptor(flickrInterceptor)
         .addInterceptor(loggingInterceptor)
         .connectTimeout(TIMEOUT, TimeUnit.SECONDS)
         .readTimeout(TIMEOUT, TimeUnit.SECONDS)
