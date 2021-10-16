@@ -8,3 +8,9 @@
 .cxx
 local.properties
 /app/build
+/domain/build
+/usecase/build
+/data/build
+/datasource/build
+/commons/build
+/presentation/build
