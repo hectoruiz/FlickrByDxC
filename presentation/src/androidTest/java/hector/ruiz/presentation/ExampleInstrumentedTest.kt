@@ -1,4 +1,4 @@
-package hector.ruiz.flickrbydxc
+package hector.ruiz.presentation
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
@@ -17,6 +17,6 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("hector.ruiz.carslocation", appContext.packageName)
+        assertEquals("hector.ruiz.presentation.test", appContext.packageName)
     }
 }

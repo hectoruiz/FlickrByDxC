@@ -6,4 +6,4 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "Flickr by DxC"
-include ':app'
+include ':app', ':domain', ':usecase', ':data', ':datasource', ':commons', ':presentation'
