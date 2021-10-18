@@ -11,6 +11,7 @@ import hector.ruiz.usecase.repositories.SearchPhotoRepository
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Test
@@ -28,7 +29,7 @@ class GetPhotoUseCaseTest {
     private lateinit var getInfoPhotoRepository: GetInfoPhotoRepository
 
     private val useCase by lazy {
-        GetPhotoUseCase(searchPhotoRepository, getInfoPhotoRepository)
+        GetPhotoUseCase(searchPhotoRepository, getInfoPhotoRepository, Dispatchers.IO)
     }
 
     @Test

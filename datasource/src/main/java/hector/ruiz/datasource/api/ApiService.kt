@@ -8,13 +8,13 @@ import retrofit2.http.Query
 
 interface ApiService {
 
-    @GET
+    @GET("rest/")
     suspend fun searchPhoto(
         @Query(value = METHOD) method: String,
         @Query(value = TEXT) keywords: String
     ): Response<PhotosResponse>
 
-    @GET
+    @GET("rest/")
     suspend fun getPhotoInfo(
         @Query(value = METHOD) method: String,
         @Query(value = PHOTO_ID) idPhoto: String,

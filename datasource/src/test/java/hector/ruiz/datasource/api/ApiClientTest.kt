@@ -47,6 +47,6 @@ class ApiClientTest {
 
     private companion object {
         const val TIMEOUT = 20L * 1000
-        const val BASE_URL = "https://www.flickr.com/services/rest/"
+        const val BASE_URL = "https://www.flickr.com/services/"
     }
 }
