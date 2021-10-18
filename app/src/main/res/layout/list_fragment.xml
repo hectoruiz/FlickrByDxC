@@ -6,10 +6,23 @@
     android:layout_height="match_parent"
     tools:context=".ui.list.ListFragment">
 
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/photoNoResults"
+        android:layout_width="@dimen/height_photo_no_results"
+        android:layout_height="@dimen/height_photo_no_results"
+        android:background="@drawable/ic_no_photos_found"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/photoList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:visibility="gone"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager" />
 
     <com.google.android.material.progressindicator.CircularProgressIndicator
@@ -17,6 +30,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:indeterminate="true"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

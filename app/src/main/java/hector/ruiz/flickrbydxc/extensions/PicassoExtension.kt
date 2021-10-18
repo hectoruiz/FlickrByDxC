@@ -14,24 +14,26 @@ fun Picasso.loadImage(
     appCompatImageView: AppCompatImageView,
     circularProgressIndicator: CircularProgressIndicator
 ) {
-    this
-        .load(
-            sizes?.first {
-                it?.label?.contains(requiredSize) == true
-            }?.source ?: "",
-        )
-        .centerInside()
-        .fit()
-        .placeholder(R.drawable.ic_photo_placeholder)
-        .error(R.drawable.ic_photo_error)
-        .into(appCompatImageView, object : Callback {
-            override fun onSuccess() {
-                circularProgressIndicator.isVisible = false
-            }
+    val selectedSize = sizes?.first {
+        it?.label?.contains(requiredSize) == true
+    }?.source
 
-            override fun onError(e: Exception?) {
-                circularProgressIndicator.isVisible = false
-                e?.printStackTrace()
-            }
-        })
+    selectedSize?.let {
+        this
+            .load(it)
+            .centerInside()
+            .fit()
+            .placeholder(R.drawable.ic_photo_placeholder)
+            .error(R.drawable.ic_photo_error)
+            .into(appCompatImageView, object : Callback {
+                override fun onSuccess() {
+                    circularProgressIndicator.isVisible = false
+                }
+
+                override fun onError(e: Exception?) {
+                    circularProgressIndicator.isVisible = false
+                    e?.printStackTrace()
+                }
+            })
+    }
 }

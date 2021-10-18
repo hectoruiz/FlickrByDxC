@@ -2,6 +2,9 @@
     <!-- App name -->
     <string name="app_name">Flickr by DxC</string>
 
+    <!-- Menu -->
+    <string name="menu_title">Search</string>
+
     <!-- Placeholders -->
     <string name="placeholder_title">No title</string>
     <string name="placeholder_author">No author</string>

@@ -1,12 +1,12 @@
 package hector.ruiz.flickrbydxc.ui.list
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -23,9 +23,24 @@ class ListFragment : Fragment() {
     private var _binding: ListFragmentBinding? = null
     private val binding get() = _binding
     private val listViewModel: ListViewModel by viewModels()
+    private val loadingObserver = Observer<Boolean> {
+        binding?.photoProgress?.isVisible = it
+    }
+    private val requestObserver = Observer<Boolean> {
+        if (it) {
+            binding?.photoNoResults?.isVisible = true
+            binding?.photoList?.isVisible = false
+            snackBarLong(R.string.error_request)
+        }
+    }
 
     @Inject
     lateinit var photoAdapter: PhotoAdapter
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -52,12 +67,31 @@ class ListFragment : Fragment() {
         }
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+
+        inflater.inflate(R.menu.searcher, menu)
+        val searchItem = menu.findItem(R.id.menu_search)
+        if (searchItem != null) {
+            val searchView = searchItem.actionView as SearchView
+            searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(query: String?): Boolean {
+                    query?.let { keyword ->
+                        searchItem.collapseActionView()
+                        listViewModel.searchPhotos(keyword)
+                    }
+                    return true
+                }
+
+                override fun onQueryTextChange(newText: String?): Boolean {
+                    return true
+                }
+            })
+        }
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        if (listViewModel.photoList.value.isNullOrEmpty()) {
-            listViewModel.searchPhotos("externocleidomastoideo")
-        }
 
         listViewModel.isLoading.observe(viewLifecycleOwner, {
             binding?.photoProgress?.isVisible = it
@@ -67,23 +101,28 @@ class ListFragment : Fragment() {
             val photos = photoList.map {
                 it.data?.photo
             }
+            if (photos.isNotEmpty()) {
+                binding?.photoNoResults?.isVisible = false
+                binding?.photoList?.isVisible = true
+            } else {
+                binding?.photoNoResults?.isVisible = true
+                binding?.photoList?.isVisible = false
+            }
             photoAdapter.setList(photos)
             photoAdapter.notifyItemRangeInserted(photoAdapter.itemCount, photos.size)
         })
 
-        listViewModel.errorRequest.observe(viewLifecycleOwner, {
-            if (it) {
-                snackBarLong(R.string.error_request)
-            }
-        })
+        listViewModel.errorRequest.observe(viewLifecycleOwner, requestObserver)
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        listViewModel.isLoading.removeObserver(loadingObserver)
+        listViewModel.errorRequest.removeObserver(requestObserver)
     }
 
     private companion object {
-        const val COLUMNS_NUMBER = 2
+        const val COLUMNS_NUMBER = 3
     }
 }
