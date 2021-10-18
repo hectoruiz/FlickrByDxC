@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/ListFragment">
+
+    <fragment
+        android:id="@+id/ListFragment"
+        android:name="hector.ruiz.flickrbydxc.ui.list.ListFragment"
+        tools:layout="@layout/list_fragment">
+
+        <action
+            android:id="@+id/action_ListFragment_to_DetailFragment"
+            app:destination="@id/DetailFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/DetailFragment"
+        android:name="hector.ruiz.flickrbydxc.ui.detail.DetailFragment"
+        tools:layout="@layout/detail_fragment">
+
+        <argument
+            android:name="photoDetails"
+            app:argType="hector.ruiz.domain.photo.info.PhotoInfo" />
+
+        <action
+            android:id="@+id/action_DetailFragment_to_ListFragment"
+            app:destination="@id/ListFragment" />
+    </fragment>
+
+</navigation>
