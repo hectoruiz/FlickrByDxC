@@ -20,7 +20,7 @@ Simple app with a searcher to look for any photo in Flickr. The app show a grid 
 - Mockito: To mock instances on unit test processing.
 - Used clean architecture with a modularized project.
 
-## How to add Flickr API Keys
+## How to add Flickr API Key
 This repository does not include tje API Key to use the Flickr API Rest. So it's necessary add this key on the project for its correct work.
 
 Set the following lines on the *local.properties* file in your local project once you have downloaded this project:
