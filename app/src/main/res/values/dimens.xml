@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="margin_parent">8dp</dimen>
+    <dimen name="margin_info_text">16dp</dimen>
+    <dimen name="padding_info_text">16dp</dimen>
+    <dimen name="padding_text">8dp</dimen>
+
+    <!-- Photo item -->
+    <dimen name="height_photo_image">194dp</dimen>
+
+</resources>
