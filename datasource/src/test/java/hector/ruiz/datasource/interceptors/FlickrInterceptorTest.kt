@@ -59,14 +59,16 @@ class FlickrInterceptorTest {
         verifySequence {
             httpUrlBuilder.addQueryParameter(API_KEY, VALUE_API_KEY)
             httpUrlBuilder.addQueryParameter(FORMAT, JSON)
+            httpUrlBuilder.addQueryParameter(JSON_CALLBACK, "1")
             httpUrlBuilder.build()
         }
     }
 
     private companion object {
-        const val API_KEY = "apikey"
-        const val VALUE_API_KEY = "api_key"
+        const val API_KEY = "api_key"
+        const val VALUE_API_KEY = "apikey"
         const val FORMAT = "format"
+        const val JSON_CALLBACK = "nojsoncallback"
         const val JSON = "json"
     }
 }

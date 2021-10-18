@@ -15,6 +15,7 @@ class FlickrInterceptor @Inject constructor(
         val url = defaultUrl.newBuilder()
             .addQueryParameter(API_KEY, apiKey)
             .addQueryParameter(FORMAT, JSON)
+            .addQueryParameter(JSON_CALLBACK, "1")
             .build()
 
         val requestBuilder = request.newBuilder().url(url)
@@ -22,8 +23,9 @@ class FlickrInterceptor @Inject constructor(
     }
 
     private companion object {
-        const val API_KEY = "apikey"
+        const val API_KEY = "api_key"
         const val FORMAT = "format"
+        const val JSON_CALLBACK = "nojsoncallback"
         const val JSON = "json"
     }
 }
