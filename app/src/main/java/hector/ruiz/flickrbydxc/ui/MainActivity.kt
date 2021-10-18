@@ -10,19 +10,12 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import dagger.hilt.android.AndroidEntryPoint
 import hector.ruiz.flickrbydxc.R
 import hector.ruiz.flickrbydxc.databinding.ActivityMainBinding
-import hector.ruiz.usecase.usecases.GetPhotoUseCase
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var appBarConfiguration: AppBarConfiguration
-
-    @Inject
-    lateinit var useCase: GetPhotoUseCase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,16 +34,5 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment)
         return navController.navigateUp(appBarConfiguration)
                 || super.onSupportNavigateUp()
-    }
-
-    override fun onResume() {
-        super.onResume()
-
-        GlobalScope.launch {
-            useCase("externocleidomastoideo").forEach {
-                println(it.data?.photo?.id)
-                println(it.data?.photo?.secret)
-            }
-        }
     }
 }

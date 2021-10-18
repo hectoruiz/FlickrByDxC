@@ -6,7 +6,11 @@ import hector.ruiz.domain.photo.info.PhotoResponse
 import hector.ruiz.domain.photo.search.Photo
 import hector.ruiz.domain.photo.search.Photos
 import hector.ruiz.domain.photo.search.PhotosResponse
+import hector.ruiz.domain.photo.sizes.PhotoSizeResponse
+import hector.ruiz.domain.photo.sizes.Size
+import hector.ruiz.domain.photo.sizes.Sizes
 import hector.ruiz.usecase.repositories.GetInfoPhotoRepository
+import hector.ruiz.usecase.repositories.GetSizesPhotoRepository
 import hector.ruiz.usecase.repositories.SearchPhotoRepository
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
@@ -28,8 +32,16 @@ class GetPhotoUseCaseTest {
     @MockK
     private lateinit var getInfoPhotoRepository: GetInfoPhotoRepository
 
+    @MockK
+    private lateinit var getSizesPhotoRepository: GetSizesPhotoRepository
+
     private val useCase by lazy {
-        GetPhotoUseCase(searchPhotoRepository, getInfoPhotoRepository, Dispatchers.IO)
+        GetPhotoUseCase(
+            searchPhotoRepository,
+            getInfoPhotoRepository,
+            getSizesPhotoRepository,
+            Dispatchers.IO
+        )
     }
 
     @Test
@@ -57,13 +69,34 @@ class GetPhotoUseCaseTest {
                     "", null, null, null, null,
                     null, "", null, null, null,
                     null, null, null, null, null,
-                    null, null, ""
+                    null, null, "", listOf()
                 ), "ok"
             )
         )
         coEvery {
             getInfoPhotoRepository.getInfoPhoto(photo?.id.orEmpty(), photo?.secret.orEmpty())
         } returns getInfoResponse
+
+        val getPhotoSizeResponse = ResponseResult(
+            null,
+            PhotoSizeResponse(
+                Sizes(
+                    0, 0, 0,
+                    listOf(
+                        Size(
+                            "label", 0, 0, "source",
+                            "url", "media"
+                        )
+                    )
+                ), "ok"
+            )
+        )
+
+        coEvery {
+            getSizesPhotoRepository.getSizesPhoto(photo?.id.orEmpty())
+        } returns getPhotoSizeResponse
+
+        getInfoResponse.data?.photo?.sizeList = getPhotoSizeResponse.data?.sizes?.size
 
         val result = runBlocking { useCase(KEYWORD) }
 

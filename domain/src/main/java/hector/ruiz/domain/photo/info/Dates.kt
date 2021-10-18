@@ -4,9 +4,9 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class Dates(
-    val posted: Int?,
+    val posted: Long?,
     val taken: String?,
     val takengranularity: Int?,
     val takenunknown: Int?,
-    val lastupdate: Int?
+    val lastupdate: Long?
 )
