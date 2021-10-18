@@ -21,7 +21,7 @@ Simple app with a searcher to look for any photo in Flickr. The app show a grid 
 - Used clean architecture with a modularized project.
 
 ## How to add Flickr API Key
-This repository does not include tje API Key to use the Flickr API Rest. So it's necessary add this key on the project for its correct work.
+This repository does not include the API Key to use the Flickr API Rest. So it's necessary add this key on the project for its correct work.
 
 Set the following lines on the *local.properties* file in your local project once you have downloaded this project:
 - FLICKR_API_KEY=**Your Flickr API key**
