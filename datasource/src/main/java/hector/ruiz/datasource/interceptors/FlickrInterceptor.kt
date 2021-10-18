@@ -14,6 +14,7 @@ class FlickrInterceptor @Inject constructor(
 
         val url = defaultUrl.newBuilder()
             .addQueryParameter(API_KEY, apiKey)
+            .addQueryParameter(FORMAT, JSON)
             .build()
 
         val requestBuilder = request.newBuilder().url(url)
@@ -22,5 +23,7 @@ class FlickrInterceptor @Inject constructor(
 
     private companion object {
         const val API_KEY = "apikey"
+        const val FORMAT = "format"
+        const val JSON = "json"
     }
 }
