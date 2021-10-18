@@ -4,6 +4,7 @@ import hector.ruiz.datasource.api.ApiClient
 import hector.ruiz.datasource.api.ApiService
 import hector.ruiz.domain.photo.info.PhotoResponse
 import hector.ruiz.domain.photo.search.PhotosResponse
+import hector.ruiz.domain.photo.sizes.PhotoSizeResponse
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.every
@@ -117,11 +118,51 @@ class NetworkDataSourceImplTest {
         assertEquals(responseData, result.data)
     }
 
+    @Test
+    fun `error requesting getSizesPhoto`() {
+        coEvery {
+            apiService.getPhotoSizes(
+                GET_SIZES_METHOD,
+                PHOTO_ID
+            )
+        } returns Response.error(
+            ERROR_CODE,
+            mockk(relaxed = true)
+        )
+        val result = runBlocking {
+            networkDataSourceImpl.getSizesPhoto(PHOTO_ID)
+        }
+
+        assertEquals(ERROR_CODE, result.errorCode)
+        assertNull(result.data)
+    }
+
+    @Test
+    fun `success requesting getSizesPhoto`() {
+        val responseData = mockk<PhotoSizeResponse>()
+        coEvery {
+            apiService.getPhotoSizes(
+                GET_SIZES_METHOD,
+                PHOTO_ID
+            )
+        } returns Response.success(
+            SUCCESS_CODE,
+            responseData
+        )
+        val result = runBlocking {
+            networkDataSourceImpl.getSizesPhoto(PHOTO_ID)
+        }
+
+        assertNull(result.errorCode)
+        assertEquals(responseData, result.data)
+    }
+
     private companion object {
         const val ERROR_CODE = 400
         const val SUCCESS_CODE = 200
         private const val SEARCH_METHOD = "flickr.photos.search"
         private const val GET_INFO_METHOD = "flickr.photos.getInfo"
+        private const val GET_SIZES_METHOD = "flickr.photos.getSizes"
         private const val KEYWORD = "keyword"
         private const val PHOTO_ID = "photo_id"
         private const val SECRET = "secret"

@@ -1,4 +1,17 @@
 <resources>
     <!-- App name -->
     <string name="app_name">Flickr by DxC</string>
+
+    <!-- Placeholders -->
+    <string name="placeholder_title">No title</string>
+    <string name="placeholder_author">No author</string>
+    <string name="placeholder_date">No posted date</string>
+    <string name="placeholder_description">No description</string>
+
+    <!-- Errors -->
+    <string name="error_request">The request could not be done. Try again later.</string>
+    ≤
+    <!-- Photo Detail -->
+    <string name="author_date">%s - %s</string>
+
 </resources>

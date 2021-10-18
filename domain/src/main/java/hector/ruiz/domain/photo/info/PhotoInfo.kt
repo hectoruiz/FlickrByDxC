@@ -1,6 +1,7 @@
 package hector.ruiz.domain.photo.info
 
 import com.squareup.moshi.JsonClass
+import hector.ruiz.domain.photo.sizes.Size
 import java.io.Serializable
 
 @JsonClass(generateAdapter = true)
@@ -32,5 +33,6 @@ data class PhotoInfo(
     val location: Location?,
     val geoperms: Geoperms?,
     val urls: Urls?,
-    val media: String?
+    val media: String?,
+    var sizeList: List<Size?>?
 ) : Serializable
