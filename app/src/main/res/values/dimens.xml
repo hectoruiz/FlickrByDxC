@@ -7,6 +7,8 @@
     <dimen name="padding_text">8dp</dimen>
 
     <!-- Photo item -->
-    <dimen name="height_photo_image">194dp</dimen>
+    <dimen name="height_photo_no_results">200dp</dimen>
+    <dimen name="height_photo_thumbnail">100dp</dimen>
+    <dimen name="height_photo_image">250dp</dimen>
 
 </resources>

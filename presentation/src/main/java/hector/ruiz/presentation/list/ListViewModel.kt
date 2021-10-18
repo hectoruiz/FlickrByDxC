@@ -34,17 +34,15 @@ class ListViewModel @Inject constructor(private val getPhotoUseCase: GetPhotoUse
     val errorRequest: LiveData<Boolean>
         get() = _errorRequest
 
-    fun searchPhotos(keyword: String) =
+    fun searchPhotos(keyword: String) {
+        _photoList.value?.clear()
         viewModelScope.launch(exceptionHandler) {
             _isLoading.postValue(true)
             val result = getPhotoUseCase(keyword)
-            if (result.isNotEmpty()) {
-                _photoList.postValue(result)
-                _isLoading.postValue(false)
-            } else {
-                manageError()
-            }
+            _photoList.postValue(result)
+            _isLoading.postValue(false)
         }
+    }
 
     private fun manageError() {
         _isLoading.postValue(false)
